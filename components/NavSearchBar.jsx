@@ -18,10 +18,8 @@ function NavSearchBar() {
   useEffect(() => {
     if (debouncedSearchTerm) {
       router.push(`/SearchResult?query=${encodeURIComponent(debouncedSearchTerm)}`);
-    } else {
-      router.push(`/SearchResult`); // Reset to default page
     }
-  }, [debouncedSearchTerm, router]);
+  }, [debouncedSearchTerm, router]); // Only navigate when there is a valid search term
 
   return (
     <div className="flex items-center space-x-2">

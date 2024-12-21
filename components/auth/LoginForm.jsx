@@ -1,13 +1,13 @@
-// app/components/LoginForm.js
-
-"use client"; // This tells Next.js that this component is client-side
+"use client";
+import { useUser } from "@/app/context/UserContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginForm({ users }) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const router = useRouter(); // To redirect on success
+  const router = useRouter();
+  const { setUser } = useUser(); // Context থেকে setUser আনুন
   console.log(users);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,7 +18,9 @@ export default function LoginForm({ users }) {
     );
 
     if (user) {
-      // Redirect to the home page on successful login
+      // Context-এ ব্যবহারকারীর তথ্য সেট করুন
+      setUser({ name: user.name, email: user.email,id:user._id });
+      // Redirect to the home page
       router.push("/");
     } else {
       alert("Invalid email or password");

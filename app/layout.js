@@ -1,7 +1,8 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
-
+import { UserProvider } from "./context/UserContext";
+import UserProviderClient from "@/components/UserProviderClient";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -22,12 +23,14 @@ export default async function RootLayout({ children }) {
  
   return (
     <html lang="en">
+      <UserProviderClient>
       <body className="bg-black text-white">
         
           <NavBar/>
           {children}
           
       </body>
+      </UserProviderClient>
     </html>
   );
 }

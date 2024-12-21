@@ -1,25 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 function SearchResult() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const query = searchParams.get("query");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!query) {
-      // Redirect back to home if no query is provided
-      router.push("/");
-      return;
+    if (query) {
+      fetchMovies(query);
     }
-
-    fetchMovies(query);
   }, [query]);
 
   const fetchMovies = async (query) => {
@@ -37,15 +32,11 @@ function SearchResult() {
     }
   };
 
-  if (!query) {
-    return null; // Prevent rendering when no query is provided
-  }
-
   return (
     <main className="container mx-auto px-4 pt-24 pb-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">
-          Search Results for `{query}`
+          Search Results for `{query || "No query provided"}`
         </h1>
         <p className="text-gray-400">
           {loading ? "Loading..." : `${movies.length} results found`}
